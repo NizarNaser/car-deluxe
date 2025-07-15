@@ -71,7 +71,7 @@ const BlogList = () => {
               <BlogItem
                 key={index}
                 id={item._id}
-                name={item.title}
+                name={item.name}
                 description={item.description}
                 category={item.category?.name}
                 image={item.images?.[0] || item.image}
