@@ -131,7 +131,7 @@ const Page = ({ params }) => {
           </Link>
         </div>
         <div className='text-center my-24'>
-          <h1 className='text-2xl sm:text-5xl font-semibold max-w-[700px] m-auto'>{data?.title}</h1>
+          <h1 className='text-2xl sm:text-5xl font-semibold max-w-[700px] m-auto'>{data?.name}</h1>
         </div>
       </div>
 
