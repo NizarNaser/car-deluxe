@@ -119,21 +119,21 @@ export default function Footer() {
       {/* زر العودة للأعلى */}
       <button
   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  className="fixed bottom-4 right-4 p-3 w-14 h-14 cursor-pointer bg-red-500 text-white rounded-full shadow-md hover:bg-red-800 transition"
+  className="fixed bottom-4 right-4 p-3 w-14 h-14 cursor-pointer bg-red-500 text-white rounded-full shadow-md hover:bg-red-800 transition opacity-50 hover:opacity-100"
 >
   ↑
 </button>
 
 
-      {/* أشكال الزينة */}
-     
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none z-0">
-        <Image
-          src={assets.footer_shape_3}
-          alt="shape"
-          className="w-full h-auto opacity-20 md:w-0.5 md:h-0.5"
-        />
-      </div>
+    {/* أشكال الزينة */}
+<div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none z-0">
+  <Image
+    src={assets.footer_shape_3}
+    alt="shape"
+    className="w-full h-auto opacity-20 sm:h-24 md:h-32 lg:h-40"
+  />
+</div>
+
      
          
       {/* قسم الحقوق */}
@@ -142,10 +142,23 @@ export default function Footer() {
           <p className="text-sm text-gray-400 text-center md:text-left">
             &copy; <a href="https://nizar-portfolio-gamma.vercel.app/" target='_blank'>https://nizar-portfolio-gamma.vercel.app/</a>. All Rights Reserved.
           </p>
-          <div className="flex gap-4 opacity-20">
-            <Image src={assets.footer_shape_2} alt="shape" width={200} height={100} />
-            <Image src={assets.footer_shape_1} alt="Red Car" width={200} height={150} />
-          </div>
+          <div className="flex gap-4 items-center justify-center md:justify-start opacity-20">
+  <Image
+    src={assets.footer_shape_2}
+    alt="shape"
+    width={100}
+    height={50}
+    className="w-24 h-auto sm:w-32"
+  />
+  <Image
+    src={assets.footer_shape_1}
+    alt="Red Car"
+    width={100}
+    height={75}
+    className="w-24 h-auto sm:w-32"
+  />
+</div>
+
         </div>
       </div>
     </footer>
