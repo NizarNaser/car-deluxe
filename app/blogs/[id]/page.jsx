@@ -1,5 +1,4 @@
 'use client';
-
 import { assets } from '@/Assets/assets';
 import { FaInstagram } from "react-icons/fa";
 import { AiOutlineFacebook } from "react-icons/ai";
@@ -161,7 +160,7 @@ const Page = ({ params }) => {
 
         {/* نص المقال */}
         <h1 className='my-8 text-[26px] font-semibold'>Introduction:</h1>
-        <div className='blog-content' dangerouslySetInnerHTML={{ __html: decodeHtml(data.description) }}></div>
+        <div className='blog-content' dangerouslySetInnerHTML={{ __html: data.description }}></div>
 
 
         {/* التقييم */}
