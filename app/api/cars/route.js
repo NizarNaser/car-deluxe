@@ -46,7 +46,7 @@ export async function POST(request) {
   // رفع كل صورة إلى Vercel Blob
   const uploadPromises = files.map(async (file) => {
     const buffer = Buffer.from(await file.arrayBuffer());
-    const blob   = await put(`cars/${Date.now()}-${file.name}`, buffer, { access: 'public' });
+    const blob   = await put(`cars/${Date.now()}-${file.name}`, buffer, { access: 'public',token: process.env.BLOB_READ_WRITE_TOKEN, });
     return blob.url;                            // رابط الصورة النهائي
   });
   const imageUrls = await Promise.all(uploadPromises);
