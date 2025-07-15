@@ -161,18 +161,8 @@ const Page = ({ params }) => {
 
         {/* نص المقال */}
         <h1 className='my-8 text-[26px] font-semibold'>Introduction:</h1>
-        <p>{data.description}</p>
+        <div className='blog-content' dangerouslySetInnerHTML={{ __html: data.description }}></div>
 
-        {/* خطوات ثابتة */}
-        {['Step 1', 'Step 2', 'Step 3'].map((step, i) => (
-          <div key={i}>
-            <h3 className='my-5 text-[18px] font-semibold'>{step}: Self-Reflection and Goal Setting</h3>
-            <p className='my-3'>Before you can manage your lifestyle, you must have a clear understanding of what you want to achieve...</p>
-          </div>
-        ))}
-
-        <h3 className='my-5 text-[18px] font-semibold'>Conclusion</h3>
-        <p className='my-3'>Managing your lifestyle is a journey that requires commitment and self-awareness...</p>
 
         {/* التقييم */}
         <div className='mt-10'>
