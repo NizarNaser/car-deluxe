@@ -58,9 +58,10 @@ export default function CarForm() {
       setImages([])
       setPreviewImages([])
     } catch (err) {
-      console.error(err)
-      alert("❌ Upload failed")
+      console.error(err);
+      toast.error(err.response?.data?.message || 'Upload failed');
     }
+    
   }
   useEffect(() => {
     fetchCategories()
