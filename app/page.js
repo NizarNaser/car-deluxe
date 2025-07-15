@@ -5,12 +5,17 @@ import Header from "@/Components/Header";
 import Hero from "@/Components/Hero";
 import ServiceSection from "@/Components/ServiceSection";
 import { ToastContainer } from "react-toastify";
+import Providers from "./providers";
 
 export default function Home() {
   return (
  <>
+ 
  <ToastContainer theme="dark" />
- <Header/>
+
+   <Header/>
+ 
+
  <Hero/>
  <ServiceSection/>
 <BlogList/>

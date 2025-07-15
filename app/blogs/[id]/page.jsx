@@ -61,11 +61,11 @@ const Page = ({ params }) => {
   };
 
   useEffect(() => {
-    if (session && id) {
+    if ( id) {
       fetchBlogData();
       setTimeout(() => setShow(true), 100);
     }
-  }, [session, id]);
+  }, [ id]);
 
   const handleAddComment = async () => {
     if (!session) {

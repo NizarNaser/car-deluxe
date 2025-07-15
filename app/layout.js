@@ -1,7 +1,6 @@
 
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from 'next-auth/react';
 import Providers from "./providers";
 const outfit = Outfit({
   subsets: ["latin"],weight:["400","500","600","700"]
@@ -19,7 +18,10 @@ export default function RootLayout({ children }) {
       <body
         className={outfit.className}
       >
-       <Providers>{children}</Providers>
+      <Providers>
+      {children}
+      </Providers>
+      
          
             
           

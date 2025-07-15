@@ -131,9 +131,7 @@ export default function Footer() {
         <Image
           src={assets.footer_shape_3}
           alt="shape"
-          width={637}
-          height={173}
-          className="w-full opacity-20"
+          className="w-full h-auto opacity-20 md:w-0.5 md:h-0.5"
         />
       </div>
      
