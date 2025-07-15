@@ -61,6 +61,7 @@ export default function CarForm() {
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || 'Upload failed');
+      
     }
     
   }

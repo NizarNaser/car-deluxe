@@ -21,12 +21,18 @@ export async function GET(request) {
     const query = categoryQ && categoryQ !== 'All' ? { category: categoryQ } : {};
     const cars  = await Car.find(query).populate('category', 'name');
     return NextResponse.json(cars);
-  } catch (err) {
-    console.error('GET /api/cars error:', err);
-    return NextResponse.json({ success: false, msg: 'Server error' }, { status: 500 });
   }
+catch (err) {
+  console.error('❌ /api/cars POST error:', {
+    message: err.message,
+    stack:   err.stack,
+  });
+  return NextResponse.json(
+    { msg: 'Internal Server Error' },
+    { status: 500 },
+  );
 }
-
+}
 /* ---------- POST (رفع سيارة جديدة) ---------- */
 export async function POST(request) {
   const form = await request.formData();
@@ -66,9 +72,16 @@ export async function DELETE(request) {
 
     await Car.findByIdAndDelete(id);
     return NextResponse.json({ success: true, msg: 'Car Deleted' });
-  } catch (err) {
-    console.error('DELETE error:', err);
-    return NextResponse.json({ success: false, msg: 'Server error' }, { status: 500 });
+  }
+  catch (err) {
+    console.error('❌ /api/cars DELETE error:', {
+      message: err.message,
+      stack:   err.stack,
+    });
+    return NextResponse.json(
+      { msg: 'Internal Server Error' },
+      { status: 500 },
+    );
   }
 }
 
