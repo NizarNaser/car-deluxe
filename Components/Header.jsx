@@ -20,9 +20,12 @@ const Header = () => {
           <Link href="/" className="text-xl font-bold text-gray-800">
             <Image src={logo} width={120} height={40} alt="Logo" priority />
           </Link>
-          <Link href="/" className="text-xl font-bold text-gray-800">
-            <h1 className="text-xl font-bold text-purple-100 hover:text-red-600 cursor-pointer">AUTO-DELUXE</h1>
-          </Link>
+          <button
+            onClick={() => document.getElementById('header')?.scrollIntoView({ behavior: 'smooth' })}
+            className="text-xl font-bold text-purple-100 hover:text-red-600 cursor-pointer"
+          >
+            AUTO-DELUXE
+          </button>
         </div>
 
         {/* Desktop Menu */}
