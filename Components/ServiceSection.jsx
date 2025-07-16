@@ -69,7 +69,7 @@ export default function ServiceSection() {
               <h3 className="text-xl font-semibold mb-3 text-gray-800">{service.title}</h3>
               <p className="text-gray-600 mb-4">{service.desc}</p>
               <a
-                href={service.link}
+                href={`#${service.link}`}
                 className="text-red-600 font-medium hover:underline inline-flex items-center"
               >
                 👉 Mehr erfahren
