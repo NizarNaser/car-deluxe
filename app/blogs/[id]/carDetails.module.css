@@ -1,0 +1,25 @@
+/* carDetails.module.css */
+.imageGallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .mainImage {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .thumbnailContainer {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    max-width: 800px;
+    justify-content: center;
+  }
+  
