@@ -1,16 +1,19 @@
 'use client';
+
 import { assets } from '@/Assets/assets';
-import { FaInstagram } from "react-icons/fa";
-import { AiOutlineFacebook } from "react-icons/ai";
+import { FaInstagram, FaFacebookF, FaTiktok } from "react-icons/fa";
 import Footer from '@/Components/Footer';
+import Header from '@/Components/Header';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSession, signIn } from 'next-auth/react';
 import { use } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Star, Send, MessageSquare, Share2, ArrowLeft } from 'lucide-react';
 
-const Page = ( props ) => {
+const Page = (props) => {
   const { id } = use(props.params);
   const { data: session } = useSession();
 
@@ -43,8 +46,6 @@ const Page = ( props ) => {
         } else {
           setRating(0);
         }
-
-        localStorage.setItem(`rating-${id}`, Date.now().toString());
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -54,9 +55,8 @@ const Page = ( props ) => {
   useEffect(() => {
     if (id) {
       fetchBlogData();
-      setTimeout(() => setShow(true), 100);
     }
-  }, [id]);
+  }, [id, session]);
 
   const handleAddComment = async () => {
     if (!session) {
@@ -101,134 +101,187 @@ const Page = ( props ) => {
 
     if (res.ok) {
       setRating(star);
-      localStorage.setItem(`rating-${id}`, Date.now().toString());
     }
   };
 
-  return data ? (
-    <div className={`transition-all duration-700 ease-out ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-      <div className='bg-gray-200 py-5 px-5 md:px-12 lg:px-28'>
-        <div className="flex items-center justify-start gap-2">
-          <Link href="/" className="text-xl font-bold text-gray-800">
-            <Image src={assets.logo} alt="Logo" width={120} height={40} style={{ height: 'auto' }} priority />
-          </Link>
-          <Link href="/" className="text-xl font-bold text-gray-800">
-            <h1 className='text-xl font-bold text-black hover:text-red-600 cursor-pointer'>AUTO-DELUXE</h1>
-          </Link>
-        </div>
+  if (!data) return (
+    <div className='min-h-screen bg-black flex items-center justify-center'>
+      <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
 
-        <div className='text-center my-24'>
-          <h1 className='text-2xl sm:text-5xl font-semibold max-w-[700px] m-auto'>{data?.name}</h1>
+  return (
+    <div className="min-h-screen bg-black text-white selection:bg-primary/30">
+      <Header />
+
+      {/* Hero Header Wrapper */}
+      <div className="relative pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <Link
+            href="/#autos"
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group"
+          >
+            <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
+            <span>Zurück zur Übersicht</span>
+          </Link>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            <div className="inline-block px-4 py-1.5 glass rounded-full text-xs font-bold uppercase tracking-widest text-primary">
+              {data.category?.name || "Fahrzeug"}
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight">
+              {data.name}
+            </h1>
+          </motion.div>
         </div>
       </div>
 
-      <div className='mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10'>
-        {/* Main Image */}
-        {activeImg && (
-          <Image
-            className='border-4 border-white rounded-md'
-            src={activeImg}
-            alt="Main Car Image"
-            width={1280}
-            height={720}
-            style={{ height: 'auto', width: '100%' }}
-          />
-        )}
+      <main className="max-w-7xl mx-auto px-6 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-        {/* Thumbnails */}
-        <div className='flex gap-2 mt-4 overflow-x-auto'>
-          {[data.image, ...(data?.images || [])]
-            .filter(img => img)
-            .map((img, i) => (
-              <Image
-                key={i}
-                src={img}
-                alt={`thumb-${i}`}
-                width={100}
-                height={60}
-                style={{ height: 'auto' }}
-                className={`cursor-pointer border ${activeImg === img ? 'border-black' : 'border-transparent'} rounded`}
-                onClick={() => setActiveImg(img)}
-              />
-            ))}
-        </div>
+          {/* Left Side: Images & Description */}
+          <div className="lg:col-span-2 space-y-12">
 
-        {/* Description */}
-        <h1 className='my-8 text-[26px] font-semibold'>Introduction:</h1>
-        <div className='blog-content' dangerouslySetInnerHTML={{ __html: data.description }} />
-
-        {/* Rating */}
-        <div className='mt-10'>
-          <p className='text-lg font-semibold mb-2'>Rate this article:</p>
-          <div className='flex items-center gap-1'>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                onClick={() => handleRating(star)}
-                className={`text-2xl cursor-pointer ${star <= rating ? 'text-yellow-500' : 'text-gray-400'}`}
+            {/* Gallery Section */}
+            <div className="space-y-6">
+              <motion.div
+                layoutId="main-image"
+                className="relative aspect-video glass rounded-[2.5rem] overflow-hidden border border-white/10"
               >
-                ★
-              </span>
-            ))}
-          </div>
-        </div>
+                <Image
+                  src={activeImg || '/default.jpeg'}
+                  alt={data.name}
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              </motion.div>
 
-        {/* Comments */}
-        <div className='mt-10'>
-          <p className='text-lg font-semibold mb-2'>Comments</p>
-          <div className='mb-4'>
-            <textarea
-              className='w-full border border-gray-400 p-2 rounded'
-              rows={3}
-              placeholder="Write a comment..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            />
-            <button
-              onClick={handleAddComment}
-              className='mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800'
-            >
-              Add Comment
-            </button>
-          </div>
-          {comments.length > 0 ? (
-            comments.map((comment, index) => (
-              <div key={index} className='border-b border-gray-300 py-2'>
-                <p className='text-sm text-gray-800 font-medium'>{comment.userEmail}</p>
-                <p className='text-sm'>{comment.comment}</p>
+              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                {[data.image, ...(data?.images || [])]
+                  .filter(img => img)
+                  .map((img, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setActiveImg(img)}
+                      className={`relative flex-shrink-0 w-32 aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${activeImg === img ? 'border-primary ring-4 ring-primary/20' : 'border-white/5'
+                        }`}
+                    >
+                      <Image src={img} alt={`Car image ${i}`} fill className="object-cover" />
+                    </motion.div>
+                  ))
+                }
               </div>
-            ))
-          ) : (
-            <p className='text-sm text-gray-500'>No comments yet.</p>
-          )}
-        </div>
+            </div>
 
-        {/* Share */}
-        <div className='my-24'>
-          <p className='text-black font-semibold my-4'>Share this article on social media</p>
-          <div className='flex gap-4'>
-            <a href="https://www.facebook.com/profile.php?id=61560404041826" target="_blank" rel="noopener noreferrer">
-              <AiOutlineFacebook className="text-5xl" />
-            </a>
-            <a href="https://instagram.com/deluxe.auto.de" target="_blank" rel="noopener noreferrer">
-              <FaInstagram className="text-5xl" />
-            </a>
-            <a href="https://home.mobile.de/NASERMAZENUNDSAIEDMOKHAMEDRAIEDGBR" target="_blank" rel="noopener noreferrer">
-              <Image
-                src={assets.Mobile_de}
-                alt="Mobile.de"
-                width={40}
-                height={40}
-                style={{ width: 'auto', height: 'auto' }}
-              />
-            </a>
+            {/* Content Section */}
+            <div className="glass p-8 md:p-12 rounded-[2.5rem] border border-white/10">
+              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <div className="w-1.5 h-8 bg-primary rounded-full" />
+                Fahrzeugbeschreibung
+              </h2>
+              <div className="blog-content prose prose-invert max-w-none prose-p:text-gray-300 prose-headings:text-white" dangerouslySetInnerHTML={{ __html: data.description }} />
+            </div>
+          </div>
+
+          {/* Right Side: Quick Info, Rating & Comments */}
+          <div className="space-y-8">
+
+            {/* Rating Box */}
+            <div className="glass p-8 rounded-[2.5rem] border border-white/10">
+              <h3 className="text-lg font-extrabold uppercase tracking-widest text-primary mb-6">Bewertung</h3>
+              <div className="flex items-center gap-2 mb-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    onClick={() => handleRating(star)}
+                    className="transition-transform hover:scale-125 focus:outline-none"
+                  >
+                    <Star
+                      size={28}
+                      className={`${star <= rating ? 'fill-yellow-500 text-yellow-500' : 'text-gray-600'} transition-colors`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <p className="text-sm text-gray-400">Geben Sie diesem Fahrzeug eine Bewertung.</p>
+            </div>
+
+            {/* Interaction / Share */}
+            <div className="glass p-8 rounded-[2.5rem] border border-white/10">
+              <h3 className="text-lg font-extrabold uppercase tracking-widest text-primary mb-6 flex items-center gap-2">
+                <Share2 size={18} /> Teilen
+              </h3>
+              <div className="flex gap-4">
+                <a href="https://facebook.com/profile.php?id=61560404041826" target="_blank" className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-primary transition-all text-xl">
+                  <FaFacebookF />
+                </a>
+                <a href="https://instagram.com/deluxe.auto.de" target="_blank" className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-primary transition-all text-xl">
+                  <FaInstagram />
+                </a>
+                <a href="https://www.tiktok.com/@deluxe.auto.de" target="_blank" className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-primary transition-all text-xl">
+                  <FaTiktok />
+                </a>
+                <a href="https://home.mobile.de/NASERMAZENUNDSAIEDMOKHAMEDRAIEDGBR#ses" target="_blank" className="px-4 h-12 glass rounded-2xl flex items-center justify-center hover:bg-white/10 transition-all opacity-50 grayscale invert">
+                  <Image src={assets.Mobile_de} alt="Mobile.de" width={30} height={30} className="w-auto h-6" />
+                </a>
+              </div>
+            </div>
+
+            {/* Comments Box */}
+            <div className="glass p-8 rounded-[2.5rem] border border-white/10 flex flex-col h-fit">
+              <h3 className="text-lg font-extrabold uppercase tracking-widest text-primary mb-6 flex items-center gap-2">
+                <MessageSquare size={18} /> Kommentare
+              </h3>
+
+              <div className="space-y-6 max-h-[400px] overflow-y-auto mb-8 pr-2 scrollbar-hide">
+                {comments.length > 0 ? (
+                  comments.map((comment, index) => (
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      key={index}
+                      className="bg-white/5 p-4 rounded-2xl border border-white/5"
+                    >
+                      <p className="text-xs font-bold text-gray-400 mb-1 truncate">{comment.userEmail}</p>
+                      <p className="text-[14px] text-gray-200">{comment.comment}</p>
+                    </motion.div>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500 text-center py-4">Noch keine Kommentare.</p>
+                )}
+              </div>
+
+              <div className="relative">
+                <textarea
+                  className="w-full bg-black/40 border border-white/10 rounded-2xl p-4 pr-12 text-sm outline-none focus:border-primary transition-all resize-none"
+                  rows={2}
+                  placeholder="Hinterlassen Sie eine Nachricht..."
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                />
+                <button
+                  onClick={handleAddComment}
+                  className="absolute right-3 bottom-3 p-2 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all"
+                >
+                  <Send size={16} />
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>
-  ) : <h1 className='text-center py-20 text-xl'>Loading...</h1>;
+  );
 };
 
 export default Page;

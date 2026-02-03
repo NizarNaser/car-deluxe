@@ -9,17 +9,14 @@ import Providers from "./providers";
 
 export default function Home() {
   return (
- <>
- 
- <ToastContainer theme="dark" />
+    <>
+      <Header />
 
-   <Header/>
- 
 
- <Hero/>
- <ServiceSection/>
-<BlogList/>
- <Footer/>
- </>
+      <Hero />
+      <ServiceSection />
+      <BlogList />
+      <Footer />
+    </>
   );
 }

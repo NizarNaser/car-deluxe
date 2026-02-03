@@ -1,24 +1,27 @@
 'use client'
+
 import React, { useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
 import axios from 'axios'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Filter } from 'lucide-react'
 
 const BlogList = () => {
   const [menu, setMenu] = useState('All')
   const [blogs, setBlogs] = useState([])
   const [categories, setCategories] = useState(['All'])
-  const [loading, setLoading] = useState(true) // حالة التحميل
+  const [loading, setLoading] = useState(true)
 
   const fetchBlogs = async () => {
     try {
-      setLoading(true) // بداية التحميل
+      setLoading(true)
       const response = await axios.get('/api/cars')
       const blogsData = Array.isArray(response.data) ? response.data : []
       setBlogs(blogsData)
     } catch (err) {
       console.error('Error fetching blogs:', err)
     } finally {
-      setLoading(false) // انتهاء التحميل
+      setLoading(false)
     }
   }
 
@@ -42,47 +45,73 @@ const BlogList = () => {
     : blogs.filter((item) => item.category?.name === menu)
 
   return (
-    <div>
-      {/* التصنيفات */}
-      <div className='flex justify-center flex-wrap gap-4 my-10'>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setMenu(cat)}
-            className={`py-1 px-4 rounded-full text-sm font-medium transition-all duration-200 hover:cursor-pointer ${
-              menu === cat
-                ? 'bg-red-600 text-white shadow-lg'
-                : 'bg-gray-200 text-black hover:bg-red-600 hover:text-white'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+    <section className="py-20 px-6 bg-black">
+      <div className="max-w-7xl mx-auto">
 
-      {/* مؤشر التحميل */}
-      {loading ? (
-        <div className="text-center text-lg text-gray-600 py-10">Loading...</div>
-      ) : (
-        // التدوينات
-        <div className='flex flex-wrap justify-around gap-4 gap-y-10 mb-16 xl:mx-24'>
-          {filteredBlogs.length > 0 ? (
-            filteredBlogs.map((item, index) => (
-              <BlogItem
-                key={index}
-                id={item._id}
-                name={item.name}
-                description={item.description}
-                category={item.category?.name}
-                image={item.images?.[0] || item.image}
-              />
-            ))
-          ) : (
-            <div className="text-center text-gray-500 w-full">There are no cars in this category.</div>
-          )}
+        {/* Filters Header */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-16 border-b border-white/5 pb-10">
+          <div>
+            <h2 className="text-3xl font-bold text-white mb-2">Unsere Fahrzeugauswahl</h2>
+            <p className="text-gray-400">Finden Sie Ihren Traumwagen aus unserem aktuellen Sortiment</p>
+          </div>
+
+          <div className='flex items-center gap-4 flex-wrap justify-center'>
+            <div className="flex items-center gap-2 text-primary mr-4">
+              <Filter size={18} />
+              <span className="text-sm font-bold uppercase tracking-widest">Filter:</span>
+            </div>
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setMenu(cat)}
+                className={`py-2 px-6 rounded-xl text-sm font-bold transition-all duration-300 ${menu === cat
+                    ? 'bg-primary text-white shadow-[0_10px_20px_rgba(220,38,38,0.2)]'
+                    : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                  }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
-    </div>
+
+        {/* Content */}
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-40 gap-4">
+            <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            <p className="text-gray-400 font-medium animate-pulse">Lade Fahrzeuge...</p>
+          </div>
+        ) : (
+          <motion.div
+            layout
+            className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-8 gap-y-12'
+          >
+            <AnimatePresence>
+              {filteredBlogs.length > 0 ? (
+                filteredBlogs.map((item) => (
+                  <BlogItem
+                    key={item._id}
+                    id={item._id}
+                    name={item.name}
+                    description={item.description}
+                    category={item.category?.name}
+                    image={item.images?.[0] || item.image}
+                  />
+                ))
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="col-span-full py-40 glass rounded-3xl text-center"
+                >
+                  <p className="text-gray-400 text-xl">Keine Fahrzeuge in dieser Kategorie gefunden.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </div>
+    </section>
   )
 }
 

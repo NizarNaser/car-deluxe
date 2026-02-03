@@ -1,95 +1,112 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { assets } from '@/Assets/assets';
-import { FaCarSide } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { AiOutlineFacebook } from "react-icons/ai";
+import { FaCarSide, FaInstagram, FaFacebookF, FaTiktok } from "react-icons/fa";
 
 const Hero = () => {
-  const hero_bg = {
-    src: '/hero.jpg',
-    alt: 'hero',
-    className: "h-auto w-auto",
-    width: 1900,   // صححت هنا from "with" to "width"
-    height: 1080,
-    priority: true
-  };
-
   return (
     <section
-      aria-label="قسم البداية (Hero Section)"
-      className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-between md:justify-between py-10 md:py-0"
-      style={{ backgroundImage: `url(${hero_bg.src})` }}
+      aria-label="Hero Section"
+      className="relative w-full min-h-screen flex items-center overflow-hidden"
     >
-      {/* خلفية شفافة للتظليل */}
-      <div className="absolute inset-0 bg-black/50 z-0" />
+      {/* Background Image with Next.js Optimization */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/hero.jpg"
+          alt="Luxury car background"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+          quality={85}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent z-10" />
+      </div>
 
-      {/* المحتوى */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8 w-full">
-        {/* النصوص */}
-        <div className="text-white md:w-1/2 text-center md:text-left space-y-4">
-          <p className="flex items-center justify-center md:justify-start gap-2 text-lg md:text-xl text-gray-200">
-            <span className="text-red-500 text-2xl" aria-hidden="true"><FaCarSide /></span>
-            Wir bieten die besten Gebrauchtwagen mit garantierter Qualität
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-            An- und Verkauf von Gebrauchtwagen
+      <div className="relative z-20 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full py-20">
+        {/* Content Box */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-white space-y-8"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm font-medium tracking-wide">
+            <FaCarSide className="text-primary animate-pulse" />
+            <span className="uppercase tracking-widest text-gray-300">Premuim Quality Cars</span>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight">
+            An- und Verkauf von <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 text-glow">
+              Gebrauchtwagen
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-200">
-            Entdecken Sie unsere große Auswahl an hochwertigen Gebrauchtwagen zu attraktiven Preisen. Bei uns erhalten Sie Qualität und Vertrauen in jedem Fahrzeug
+
+          <p className="text-xl md:text-2xl text-gray-300 max-w-xl leading-relaxed">
+            Entdecken Sie unsere große Auswahl an hochwertigen Gebrauchtwagen zu attraktiven Preisen. Bei uns erhalten Sie Qualität und Vertrauen in jedem Fahrzeug.
           </p>
-          <div className="flex gap-4 mt-4">
-            <a
-              href="https://www.facebook.com/profile.php?id=61560404041826"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="زيارة صفحتنا على فيسبوك"
-            >
-              <AiOutlineFacebook className="text-5xl" />
+
+          <div className="flex flex-wrap gap-4 pt-4">
+            <button className="px-8 py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-red-600/20">
+              Unsere Autos
+            </button>
+            <button className="px-8 py-4 glass hover:bg-white/10 text-white font-bold rounded-lg transition-all border border-white/20">
+              Kontaktieren
+            </button>
+          </div>
+
+          <div className="flex items-center gap-6 pt-8">
+            <a href="https://facebook.com/profile.php?id=61560404041826" target="_blank" className="text-2xl text-gray-400 hover:text-white transition-colors">
+              <FaFacebookF />
             </a>
-            <a
-              href="https://instagram.com/deluxe.auto.de"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="زيارة صفحتنا على انستغرام"
-            >
-              <FaInstagram className="text-5xl" />
+            <a href="https://instagram.com/deluxe.auto.de" target="_blank" className="text-2xl text-gray-400 hover:text-white transition-colors">
+              <FaInstagram />
             </a>
-            <a
-              href="https://home.mobile.de/NASERMAZENUNDSAIEDMOKHAMEDRAIEDGBR#ses"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="زيارة صفحتنا على Mobile.de"
-            >
+            <a href="https://www.tiktok.com/@deluxe.auto.de" target="_blank" className="text-2xl text-gray-400 hover:text-white transition-colors">
+              <FaTiktok />
+            </a>
+            <a href="https://home.mobile.de/NASERMAZENUNDSAIEDMOKHAMEDRAIEDGBR#ses" target="_blank" className="h-8 w-auto grayscale contrast-125 opacity-60 hover:opacity-100 hover:grayscale-0 transition-all flex items-center">
               <Image
                 src={assets.Mobile_de}
                 alt="Mobile-de"
-                className="w-10 h-10 mt-1"
+                width={100}
+                height={30}
+                className="object-contain h-6"
               />
             </a>
           </div>
-        </div>
+        </motion.div>
 
-        {/* صورة السيارة مع الحركة */}
+        {/* Floating Car Feature */}
         <motion.div
-          className="w-full md:w-1/2 flex justify-center"
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          initial={{ opacity: 0, scale: 0.8, x: 50 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="hidden md:flex justify-center relative"
         >
-          <div className="relative w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px] aspect-square">
+          <div className="relative w-full max-w-[600px] aspect-[4/3] animate-float">
             <Image
               src={assets.hero_banner}
-              alt="Car"
+              alt="Featured Car"
               fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 500px, 700px"
+              className="object-contain drop-shadow-[0_20px_50px_rgba(220,38,38,0.3)]"
+              sizes="50vw"
               priority
             />
           </div>
+
+          {/* Decorative Elements */}
+          <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-red-600/10 blur-[120px] rounded-full animate-pulse-slow" />
         </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 opacity-50">
+        <span className="text-xs uppercase tracking-[0.2em]">Scroll</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
       </div>
     </section>
   );

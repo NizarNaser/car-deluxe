@@ -2,8 +2,11 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import WhatsAppButton from "@/Components/WhatsAppButton";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const outfit = Outfit({
-  subsets: ["latin"],weight:["400","500","600","700"]
+  subsets: ["latin"], weight: ["400", "500", "600", "700"]
 });
 
 
@@ -17,16 +20,19 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={outfit.className}
+        suppressHydrationWarning
       >
-      <Providers>
-      {children}
-      </Providers>
-      
-         
-            
-          
-          
-      
+        <Providers>
+          <ToastContainer theme="dark" />
+          {children}
+          <WhatsAppButton />
+        </Providers>
+
+
+
+
+
+
       </body>
     </html>
   );

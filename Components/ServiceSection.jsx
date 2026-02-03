@@ -2,91 +2,125 @@
 
 import Image from "next/image";
 import { assets } from "@/Assets/assets";
-
-const bg = {
-    src: "/service.jpg",
-    alt: "service",
-     className:"h-auto w-auto"
-};
+import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const services = [
   {
     icon: assets.service1,
     title: "Gebrauchtwagenverkauf",
     desc: "Entdecken Sie unsere große Auswahl an geprüften Gebrauchtwagen – Qualität und faire Preise garantiert.",
-    link: "#",
-     
+    features: ["Geprüfte Qualität", "Faire Preise", "Garantie"]
   },
   {
     icon: assets.service2,
-    title: "An- und Verkauf von Fahrzeugen",
+    title: "An- und Verkauf",
     desc: "Wir kaufen Ihr Fahrzeug zu besten Konditionen oder helfen Ihnen beim Finden Ihres Traumwagens.",
-    link: "#",
-    
+    features: ["Direktankauf", "Inzahlungnahme", "Bestpreise"]
   },
   {
     icon: assets.service3,
-    title: "Abschlepp- und Transportservice deutschlandweit",
+    title: "Transportservice",
     desc: "Unser zuverlässiger Abschleppdienst bringt Ihr Fahrzeug sicher an jeden Ort in Deutschland.",
-    link: "#",
-    
+    features: ["Deutschlandweit", "24/7 Service", "Sicherer Transport"]
   },
 ];
 
 export default function ServiceSection() {
   return (
-    <section
-    id="services"
-      className="relative py-20 px-4 bg-cover bg-center bg-no-repeat "
-      style={{ backgroundImage: `url(${bg.src})`}}
-      aria-labelledby="service-label"
-    >
-      <div className="absolute inset-0 bg-black/60 z-0" />
+    <section id="services" className="relative py-24 overflow-hidden bg-black">
+      {/* Background Image with Optimization */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/service.jpg"
+          alt="Service background"
+          fill
+          className="object-cover opacity-40 grayscale"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black z-10" />
+      </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto text-center">
-        <p
-          id="service-label"
-          className="text-red-500 uppercase tracking-widest text-sm mb-2"
-        >
-          Unsere Services
-        </p>
-        <h2 className="text-white text-3xl md:text-4xl font-bold mb-10">
-          Wir bieten großartige Services für Ihr Fahrzeug
-        </h2>
-
-        <ul className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, idx) => (
-            <li key={idx} className="bg-white rounded-xl shadow-md p-6 text-left">
-              <figure className="mb-4 flex justify-center">
-                <Image
-                    src={service.icon}
-                    alt={service.title}
-                    width={110}
-                    height={110}
-                    loading="lazy"
-                />
-              </figure>
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">{service.title}</h3>
-              <p className="text-gray-600 mb-4">{service.desc}</p>
-              <a
-                href={`#${service.link}`}
-                className="text-red-600 font-medium hover:underline inline-flex items-center"
-              >
-                👉 Mehr erfahren
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div id='autos' className="mt-10">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded transition"
+      <div className="relative z-20 max-w-7xl mx-auto px-6">
+        <div className="text-center mb-20">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-primary uppercase tracking-[0.3em] text-sm font-bold mb-4"
           >
-            Alle Services anzeigen
-            <span className="material-symbols-rounded">arrow_forward</span>
-          </a>
+            Unsere Leistungen
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-6xl font-extrabold text-white leading-tight"
+          >
+            Premium Services für <br />
+            <span className="text-glow">Ihr Fahrzeug</span>
+          </motion.h2>
         </div>
+
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="group relative p-8 rounded-3xl glass hover:bg-white/10 transition-all duration-500 border border-white/10"
+            >
+              <div className="absolute -top-6 left-8 p-4 bg-primary rounded-2xl shadow-xl shadow-red-600/30 group-hover:scale-110 transition-transform duration-500">
+                <Image
+                  src={service.icon}
+                  alt={service.title}
+                  width={48}
+                  height={48}
+                  className="brightness-0 invert"
+                />
+              </div>
+
+              <div className="mt-8 space-y-4">
+                <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">
+                  {service.title}
+                </h3>
+                <p className="text-gray-400 leading-relaxed">
+                  {service.desc}
+                </p>
+
+                <ul className="space-y-2 pt-4">
+                  {service.features.map((feat, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                      <CheckCircle2 size={16} className="text-primary" />
+                      {feat}
+                    </li>
+                  ))}
+                </ul>
+
+                <button className="flex items-center gap-2 text-primary font-bold pt-4 group/btn">
+                  <span>Mehr erfahren</span>
+                  <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-2" />
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          id='autos'
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-20 text-center"
+        >
+          <button className="px-10 py-5 bg-white text-black hover:bg-primary hover:text-white transition-all duration-500 font-black rounded-2xl flex items-center gap-3 mx-auto uppercase tracking-tighter">
+            Alle Leistungen entdecken
+            <ArrowRight size={24} />
+          </button>
+        </motion.div>
       </div>
     </section>
   );
