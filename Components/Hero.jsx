@@ -50,10 +50,16 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
-            <button className="px-8 py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-red-600/20">
+            <button
+              onClick={() => document.getElementById('autos')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-red-600/20"
+            >
               Unsere Autos
             </button>
-            <button className="px-8 py-4 glass hover:bg-white/10 text-white font-bold rounded-lg transition-all border border-white/20">
+            <button
+              onClick={() => document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 glass hover:bg-white/10 text-white font-bold rounded-lg transition-all border border-white/20"
+            >
               Kontaktieren
             </button>
           </div>
