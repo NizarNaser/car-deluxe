@@ -1,7 +1,7 @@
 'use client';
 
 import { assets } from '@/Assets/assets';
-import { FaInstagram, FaFacebookF, FaTiktok, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaTiktok, FaWhatsapp, FaTelegram, FaLinkedin } from "react-icons/fa";
 import Footer from '@/Components/Footer';
 import Header from '@/Components/Header';
 import Image from 'next/image';
@@ -218,12 +218,12 @@ const Page = (props) => {
               <h3 className="text-lg font-extrabold uppercase tracking-widest text-primary mb-6 flex items-center gap-2">
                 <Share2 size={18} /> Teilen
               </h3>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 {/* Facebook Share */}
                 <button
                   onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
                   className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all text-xl text-gray-300"
-                  title="Auf Facebook teilen"
+                  title="Facebook"
                 >
                   <FaFacebookF />
                 </button>
@@ -232,9 +232,51 @@ const Page = (props) => {
                 <button
                   onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Schauen Sie sich dieses Auto an: ${window.location.href}`)}`, '_blank')}
                   className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all text-xl text-gray-300"
-                  title="Per WhatsApp senden"
+                  title="WhatsApp"
                 >
                   <FaWhatsapp />
+                </button>
+
+                {/* Telegram Share */}
+                <button
+                  onClick={() => window.open(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(data.name)}`, '_blank')}
+                  className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-[#0088cc] hover:text-white transition-all text-xl text-gray-300"
+                  title="Telegram"
+                >
+                  <FaTelegram />
+                </button>
+
+                {/* LinkedIn Share */}
+                <button
+                  onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')}
+                  className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-[#0077b5] hover:text-white transition-all text-xl text-gray-300"
+                  title="LinkedIn"
+                >
+                  <FaLinkedin />
+                </button>
+
+                {/* Instagram (Copy Link workaround) */}
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link kopiert! Sie können ihn jetzt auf Instagram teilen.');
+                  }}
+                  className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-all text-xl text-gray-300"
+                  title="Instagram (Link kopieren)"
+                >
+                  <FaInstagram />
+                </button>
+
+                {/* TikTok (Copy Link workaround) */}
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link kopiert! Sie können ihn jetzt auf TikTok teilen.');
+                  }}
+                  className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-black hover:text-white transition-all text-xl text-gray-300"
+                  title="TikTok (Link kopieren)"
+                >
+                  <FaTiktok />
                 </button>
 
                 {/* Copy Link */}
