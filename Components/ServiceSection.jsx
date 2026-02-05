@@ -83,7 +83,7 @@ export default function ServiceSection() {
                 />
               </div>
 
-              <div className="mt-8 space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
+              <div className="mt-14 space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
                 <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
