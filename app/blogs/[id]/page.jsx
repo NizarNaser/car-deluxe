@@ -1,7 +1,7 @@
 'use client';
 
 import { assets } from '@/Assets/assets';
-import { FaInstagram, FaFacebookF, FaTiktok } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaTiktok, FaWhatsapp } from "react-icons/fa";
 import Footer from '@/Components/Footer';
 import Header from '@/Components/Header';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useSession, signIn } from 'next-auth/react';
 import { use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Send, MessageSquare, Share2, ArrowLeft } from 'lucide-react';
+import { Star, Send, MessageSquare, Share2, ArrowLeft, Link as LinkIcon } from 'lucide-react';
 
 const Page = (props) => {
   const { id } = use(props.params);
@@ -219,18 +219,35 @@ const Page = (props) => {
                 <Share2 size={18} /> Teilen
               </h3>
               <div className="flex gap-4">
-                <a href="https://facebook.com/profile.php?id=61560404041826" target="_blank" className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-primary transition-all text-xl">
+                {/* Facebook Share */}
+                <button
+                  onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                  className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all text-xl text-gray-300"
+                  title="Auf Facebook teilen"
+                >
                   <FaFacebookF />
-                </a>
-                <a href="https://instagram.com/deluxe.auto.de" target="_blank" className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-primary transition-all text-xl">
-                  <FaInstagram />
-                </a>
-                <a href="https://www.tiktok.com/@deluxe.auto.de" target="_blank" className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-primary transition-all text-xl">
-                  <FaTiktok />
-                </a>
-                <a href="https://home.mobile.de/NASERMAZENUNDSAIEDMOKHAMEDRAIEDGBR#ses" target="_blank" className="px-4 h-12 glass rounded-2xl flex items-center justify-center hover:bg-white/10 transition-all opacity-50 grayscale invert">
-                  <Image src={assets.Mobile_de} alt="Mobile.de" width={30} height={30} className="w-auto h-6" />
-                </a>
+                </button>
+
+                {/* WhatsApp Share */}
+                <button
+                  onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Schauen Sie sich dieses Auto an: ${window.location.href}`)}`, '_blank')}
+                  className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all text-xl text-gray-300"
+                  title="Per WhatsApp senden"
+                >
+                  <FaWhatsapp />
+                </button>
+
+                {/* Copy Link */}
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link kopiert!');
+                  }}
+                  className="w-12 h-12 glass rounded-2xl flex items-center justify-center hover:bg-white/20 hover:text-white transition-all text-xl text-gray-300"
+                  title="Link kopieren"
+                >
+                  <LinkIcon />
+                </button>
               </div>
             </div>
 
