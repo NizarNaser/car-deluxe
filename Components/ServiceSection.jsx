@@ -41,7 +41,7 @@ export default function ServiceSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black z-10" />
       </div>
 
-      <div className="relative z-20 max-w-7xl mx-auto px-6">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-6">
         <div className="text-center mb-20">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -83,7 +83,7 @@ export default function ServiceSection() {
                 />
               </div>
 
-              <div className="mt-14 space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
+              <div className="mt-8 space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
                 <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
