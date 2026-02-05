@@ -71,7 +71,7 @@ export default function ServiceSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group relative p-8 rounded-3xl glass hover:bg-white/10 transition-all duration-500 border border-white/10"
+              className="group relative p-5 md:p-8 rounded-3xl glass hover:bg-white/10 transition-all duration-500 border border-white/10"
             >
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 md:left-8 md:translate-x-0 p-4 bg-primary rounded-2xl shadow-xl shadow-red-600/30 group-hover:scale-110 transition-transform duration-500">
                 <Image
