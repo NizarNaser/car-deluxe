@@ -12,22 +12,26 @@ const connectDB = async () => {
 };
 
 export async function POST(request) {
-  const formData = await request.formData();
-  const email = formData.get("email");
+  try {
+    const { email } = await request.json();
 
-  if (!email || !email.includes("@")) {
-    return NextResponse.json({ success: false, msg: "Email is invalid" }, { status: 400 });
+    if (!email || !email.includes("@")) {
+      return NextResponse.json({ success: false, msg: "Email is invalid" }, { status: 400 });
+    }
+
+    await connectDB();
+
+    const existing = await EmailModel.findOne({ email });
+    if (existing) {
+      return NextResponse.json({ success: false, msg: "Email already subscribed" }, { status: 409 });
+    }
+
+    await EmailModel.create({ email });
+    return NextResponse.json({ success: true, msg: "Email saved" });
+  } catch (error) {
+    console.error("Email API Error:", error);
+    return NextResponse.json({ success: false, msg: "Server Error" }, { status: 500 });
   }
-
-  await connectDB();
-
-  const existing = await EmailModel.findOne({ email });
-  if (existing) {
-    return NextResponse.json({ success: false, msg: "Email already subscribed" }, { status: 409 });
-  }
-
-  await EmailModel.create({ email });
-  return NextResponse.json({ success: true, msg: "Email saved" });
 }
 
 export async function GET(request) {

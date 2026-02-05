@@ -15,9 +15,8 @@ export default function Footer() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('email', email);
-      const response = await axios.post('/api/email', formData);
+      // Send as JSON
+      const response = await axios.post('/api/email', { email });
       if (response.data.success) {
         toast.success(response.data.msg);
         setEmail('');
