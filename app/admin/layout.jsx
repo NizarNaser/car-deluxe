@@ -14,7 +14,7 @@ export default function AdminLayout({ children }) {
                 <ToastContainer theme="dark" />
                 <Sidebar />
                 <div className="flex flex-col w-full">
-                    <div className="flex items-center justify-between w-full py-3 max-h-[60px] px-12 border-b border-black">
+                    <div className="flex items-center justify-between w-full py-3 max-h-[60px] px-12 border-b border-gray-700 text-white">
                         <h3 className="font-medium">Admin Panel</h3>
                         <Image
                             src={session?.user?.image || assets.profile_icon}
@@ -28,9 +28,9 @@ export default function AdminLayout({ children }) {
                     <Providers>
                         {children}
                     </Providers>
-                         
-                   
-                   
+
+
+
                 </div>
             </div>
 

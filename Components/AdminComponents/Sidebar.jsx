@@ -5,7 +5,7 @@ import React from 'react'
 
 const Sidebar = () => {
     return (
-        <div className='flex flex-col bg-slate-100'>
+        <div className='flex flex-col bg-slate-100 text-black'>
             <div className='px-2 sm:pl-14 py-3 border border-black'>
                 <Link href="/">
                     <Image
