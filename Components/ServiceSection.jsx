@@ -73,7 +73,7 @@ export default function ServiceSection() {
               transition={{ delay: idx * 0.1 }}
               className="group relative p-8 rounded-3xl glass hover:bg-white/10 transition-all duration-500 border border-white/10"
             >
-              <div className="absolute -top-6 left-8 p-4 bg-primary rounded-2xl shadow-xl shadow-red-600/30 group-hover:scale-110 transition-transform duration-500">
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 md:left-8 md:translate-x-0 p-4 bg-primary rounded-2xl shadow-xl shadow-red-600/30 group-hover:scale-110 transition-transform duration-500">
                 <Image
                   src={service.icon}
                   alt={service.title}
@@ -83,7 +83,7 @@ export default function ServiceSection() {
                 />
               </div>
 
-              <div className="mt-8 space-y-4">
+              <div className="mt-8 space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
                 <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
@@ -91,16 +91,16 @@ export default function ServiceSection() {
                   {service.desc}
                 </p>
 
-                <ul className="space-y-2 pt-4">
+                <ul className="space-y-2 pt-4 w-full">
                   {service.features.map((feat, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                    <li key={i} className="flex items-center justify-center md:justify-start gap-2 text-sm text-gray-300">
                       <CheckCircle2 size={16} className="text-primary" />
                       {feat}
                     </li>
                   ))}
                 </ul>
 
-                <button className="flex items-center gap-2 text-primary font-bold pt-4 group/btn">
+                <button className="flex items-center justify-center md:justify-start gap-2 text-primary font-bold pt-4 group/btn w-full md:w-auto">
                   <span>Mehr erfahren</span>
                   <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-2" />
                 </button>

@@ -31,7 +31,7 @@ const Hero = () => {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-white space-y-8"
+          className="text-white space-y-8 flex flex-col items-center md:items-start text-center md:text-left"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm font-medium tracking-wide">
             <FaCarSide className="text-primary animate-pulse" />
@@ -49,7 +49,7 @@ const Hero = () => {
             Entdecken Sie unsere große Auswahl an hochwertigen Gebrauchtwagen zu attraktiven Preisen. Bei uns erhalten Sie Qualität und Vertrauen in jedem Fahrzeug.
           </p>
 
-          <div className="flex flex-wrap gap-4 pt-4">
+          <div className="flex flex-wrap gap-4 pt-4 justify-center md:justify-start">
             <button
               onClick={() => document.getElementById('autos')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-8 py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-red-600/20"
@@ -64,7 +64,7 @@ const Hero = () => {
             </button>
           </div>
 
-          <div className="flex items-center gap-6 pt-8">
+          <div className="flex items-center gap-6 pt-8 justify-center md:justify-start">
             <a href="https://facebook.com/profile.php?id=61560404041826" target="_blank" className="text-2xl text-gray-400 hover:text-white transition-colors">
               <FaFacebookF />
             </a>
