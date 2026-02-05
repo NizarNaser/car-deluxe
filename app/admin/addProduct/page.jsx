@@ -1,10 +1,13 @@
 'use client';
-// components/CarForm.jsx
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import axios from "axios"
 import { toast } from "react-toastify";
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
 
 export default function CarForm() {
+  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
@@ -14,7 +17,7 @@ export default function CarForm() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('/api/categories') // جلب التصنيفات
+      const response = await axios.get('/api/categories')
       setCategories(response.data)
 
     } catch (err) {
@@ -51,7 +54,7 @@ export default function CarForm() {
 
     try {
       const res = await axios.post("/api/cars", formData)
-      alert("✅The car was successfully lifted.   ")
+      toast.success("✅ The car was successfully added.")
       // Reset form
       setName("")
       setDescription("")
@@ -61,71 +64,80 @@ export default function CarForm() {
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || 'Upload failed');
-      
+
     }
-    
+
   }
   useEffect(() => {
     fetchCategories()
   }, [])
+
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4 p-4 bg-white rounded shadow max-w-md mx-auto mt-10">
-      <h2 className="text-xl font-bold"> Add Car</h2>
+    <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4 p-4 bg-white rounded shadow max-w-2xl mx-auto mt-10 text-black">
+      <h2 className="text-xl font-bold"> Add Car </h2>
 
-      <input
-        type="text"
-        placeholder="name"
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="w-full border p-2 rounded"
-        required
-      />
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold">Car Name</label>
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full border p-2 rounded"
+          required
+        />
+      </div>
 
-      <textarea
-        placeholder="description"
-        name="description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="w-full border p-2 rounded"
-        required
-      />
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold">Description</label>
+        <ReactQuill
+          theme="snow"
+          value={description}
+          onChange={setDescription}
+          className="bg-white text-black h-64 mb-12"
+        />
+      </div>
 
-      <select
-        onChange={(e) => setCategory(e.target.value)}
-        value={category}
-        className="w-full border p-2 rounded"
-        required
-      >
-        <option value="" className="text-gray-400 hover:cursor-pointer"> choose category</option>
-        {categories.map((cat) => (
-          <option key={cat._id} value={cat._id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold">Category</label>
+        <select
+          onChange={(e) => setCategory(e.target.value)}
+          value={category}
+          className="w-full border p-2 rounded"
+          required
+        >
+          <option value="" className="text-gray-400 hover:cursor-pointer">Choose category</option>
+          {categories.map((cat) => (
+            <option key={cat._id} value={cat._id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold">Images</label>
+        <input
+          type="file"
+          multiple
+          name="images"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full"
+        />
+      </div>
 
-
-      <input
-        type="file"
-        multiple
-        name="images"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="w-full"
-      />
-
-      {/* معاينة الصور مع زر حذف */}
+      {/* Preview Images */}
       <div className="flex gap-2 flex-wrap">
         {previewImages.map((src, index) => (
-          <div key={index} className="relative w-20 h-20">
-            <img src={src} alt={`preview-${index}`} className="w-full h-full object-cover rounded" />
+          <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
+            <img src={src} alt={`preview-${index}`} className="w-full h-full object-cover" />
             <button
               type="button"
               onClick={() => handleRemoveImage(index)}
-              className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-              title=" delete image"
+              className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-700 transition"
+              title="Delete image"
             >
               ×
             </button>
@@ -133,8 +145,8 @@ export default function CarForm() {
         ))}
       </div>
 
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-        add
+      <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-bold w-full sm:w-auto transition-colors">
+        Add Car
       </button>
     </form>
   )
