@@ -3,10 +3,10 @@ import { useEffect, useState, useMemo } from "react"
 import axios from "axios"
 import { toast } from "react-toastify";
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill-new/dist/quill.snow.css';
 
 export default function CarForm() {
-  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+  const ReactQuill = useMemo(() => dynamic(() => import('react-quill-new'), { ssr: false }), []);
 
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
